@@ -38,3 +38,10 @@ Equal thresholds (`rise == fall`) are allowed and collapse the band to zero; the
 - `src/hysteresis_gate/__init__.py` exports `HysteresisGate` and `GateState`.
 - `src/hysteresis_gate/core.py` holds the implementation.
 - Tests run with `PYTHONPATH=src python -m unittest discover -s tests`.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
